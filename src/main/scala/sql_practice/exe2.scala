@@ -22,10 +22,37 @@ object exe2 {
       .option("delimiter","\t")
       .csv("data/input/sample_08")
       .select($"_c0".as("code"),
-      $"_c1".as("description"),
+      $"_c1".as("description8"),
       $"_c2".as("nbremploye8"),
       $"_c3".as("salary8"))
     sample08DF.show
+
+    //question 1: salaries over 100 000
+    sample07DF
+      .orderBy($"salary7".desc)
+      .filter($"salary7" > 100000)
+      .show
+
+    sample08DF
+      .orderBy($"salary8".desc)
+      .filter($"salary8" > 100000)
+      .show
+
+    //question 2: growth
+    sample07DF
+      .join(sample08DF, Seq("code"))
+      .select($"description",$"salary7", $"salary8", ((($"salary8"-$"salary7")/$"salary7")*100).as("growth"))
+      .filter($"salary8">$"salary7")
+      .orderBy($"growth".desc)
+      .show
+
+    //question 3: domains of lost jobs
+    sample07DF
+      .join(sample08DF, Seq("code"))
+      .select($"description",$"nbremploye7", $"nbremploye8", ($"nbremploye8"-$"nbremploye7").as("lostJobs"))
+      .filter($"nbremploye8">$"nbremploye7")
+      .orderBy($"lostJobs".desc)
+      .show
 
   }
 }
