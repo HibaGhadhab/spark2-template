@@ -14,7 +14,10 @@ object Main {
     //sql_practice.exe1.exec1()
 
     //Exercice 2
-    sql_practice.exe2.exec1()
+    //sql_practice.exe2.exec1()
+
+    //Exercice 3
+    sql_practice.exe3.exec1()
 
   }
 }
